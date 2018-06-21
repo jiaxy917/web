@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>留言板</title>
+        <style>
+            *{margin:0;padding:0;}
+            .message{width:300px;min-height:500px;border:1px solid #333;padding:10px;background:#F6F6F6;margin:10px auto;border-radius:5px;}
+            input{height:20px;padding:0 3px;color:#}
+            ul{list-style:none;}
+            li{font-size:16px;height:20px;text-indent:10px;margin-top:10px;line-height:20px;font-weight:bold;color:#666;}
+        </style>
+        <script language="JavaScript">
+
+            window.onload=function () {
+                var input=document.getElementsByTagName('input');
+                var ul=document.getElementById("list");
+               input[0].onkeyup=function (ev) {
+                    if(ev.keyCode=='13'){
+                        if(this.value!=''){
+                            addInfo(ul,input);
+                        }else{
+                            alert('请输入留言内容!');
+                        }
+                    }
+                }
+                input[1].onclick=function () {
+                    addInfo(ul,input);
+                }
+                input[2].onclick=function (ev) {
+                    var liArray=document.getElementsByTagName("li");
+                    var length=liArray.length;
+                    for(var i=0;i<length;i++){
+                        ul.removeChild(liArray[i]);
+
+                    }
+                }
+            }
+
+            function addInfo(ul,input) {
+                var liElement=document.createElement('li');
+                var liArray=document.getElementsByTagName("li");
+                liElement.innerHTML=input[0].value;
+                if(ul.children[0]){
+                    ul.insertBefore(liElement,ul.children[0]);
+                }else{
+                    ul.appendChild(liElement);
+                }
+                for(var i=0;i<ul.children.length;i++){
+                    (function(j){
+                        ul.children[j].onmouseover=function (ev) {
+                            this.style.background="#fff";
+                            this.style.color="#fff";
+                        }
+                        ul.children[j].onmouseout=function (ev) {
+                            this.style.background="";
+                            this.style.color="";
+                        }
+                        ul.children[j].onclick=function (ev) {
+                            if (j % 2 == 0) {
+                                this.style.background = "pink";
+                                liArray[j].onmouseout = function () {
+                                    this.style.background = "pink";
+                                }
+                            } else {
+                                this.style.background = "#3c9";
+                                liArray[j].onmouseout = function () {
+                                    this.style.background = "#3c9";
+                                }
+                            }
+                        }
+                    })(i);
+                }
+                input[0].value="";
+            }
+        </script>
+    </head>
+    <body>
+        <div class="message">
+            <input type="text"/>
+            <input type="button" value="留言" />
+            <input type="button" value="批量删除" />
+            <ul id="list"></ul>
+            </div>
+    </body>
+</html>

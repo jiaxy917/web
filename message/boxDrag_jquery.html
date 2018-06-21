@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>图标移动</title>
+    <style>
+        *{margin:0;padding:0;}
+        #box{width:120px;height:120px;text-align:center;line-height:120px;border:1px solid #fff;border-radius:5px;position:absolute;}
+        span{color:#fff;font-size:16px;line-height:100px;font-weight:bolder;cursor:pointer;display:block;background:black;width:100px;height:100px;border-radius:50px;position:absolute;top:10px;left:10px;}
+    </style>
+    <script type="text/javascript" src="jquery-1.9.1.js"></script>
+    <script >
+       $(function () {
+               var box=$("#box");
+               var span=$("span")[0];
+               var onOff=false;
+               $(span).mousedown(function () {
+                   $(box).css({background:"#ccc",borderColor:"#666"});
+                   onOff=true;
+                   $(document).mousemove(function (ev) {
+                       if (onOff) {
+                           var scrollTop = $("html").scrollTop();
+                           var scrollLeft = $("html").scrollLeft();
+                           var left = ev.clientX + scrollLeft - 50 + "px";
+                           var top = ev.clientY + scrollTop - 50 + "px";
+                           $(box).css({left: left, top: top});
+                       }
+                   });
+                   $(span).mouseup(function () {
+                       $(box).css({background:"",borderColor:"#fff"});
+                      onOff=false;
+                   });
+               });
+       }
+       );
+    </script>
+</head>
+<body>
+<div id="box">
+    <span>图标移动</span>
+</div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>留言板</title>
+    <style>
+        *{margin:0;padding:0;}
+        .message{width:300px;min-height:500px;border:1px solid #333;padding:10px;background:#F6F6F6;margin:10px auto;border-radius:5px;}
+        input{height:20px;padding:0 3px;color:#}
+        ul{list-style:none;}
+        li{font-size:16px;height:20px;text-indent:10px;margin-top:10px;line-height:20px;font-weight:bold;color:#666;}
+    </style>
+    <script type="text/javascript"  src="jquery-1.9.1.js"></script>
+    <script language="JavaScript">
+    $(function () {
+        $($("input")[0]).bind("keyup",function (ev) {
+            if(ev.keyCode==13){
+                if($($("input")[0]).val()!=""){
+                    addInfo();
+                }else{
+                    alert("请输入留言内容！");
+                }
+            }
+        });
+        $($("input")[1]).bind("click",addInfo);
+        $($("input")[2]).bind("click",function () {
+            $("#list").children("li").remove();
+        });
+        }
+    );
+    function addInfo() {
+        var input=$("input");
+        var ul=$("#list");
+        var li=document.createElement("li");
+        $(li).html($($(input)[0]).val());
+        var liArray=$(ul).children("li");
+        if($(liArray)[0]==undefined){
+            $(ul).append(li);
+        }else{
+            $(ul).prepend(li);
+        }
+        $("#list").children("li").bind("mouseover",function () {
+            $(this).css({background:"#999",color:"#fff"});
+        }).bind("mouseout",function () {
+            $(this).css({background:"",color:""});
+        }).bind("click",function () {
+            var idex=$(this).index();
+            if(idex%2==0){
+                $(this).css({background:"pink"});
+                $(this).bind("mouseout",function () {
+                    $(this).css({background:"pink"});
+                })
+            }else{
+                $(this).css({background:"#3c9"});
+                $(this).bind("mouseout",function () {
+                    $(this).css({background:"#3c9"});
+                })
+            }
+        }).bind("dblclick",function () {
+            $(this).remove();
+        });
+
+
+        $($(input)[0]).val("");
+    }
+
+    </script>
+</head>
+<body>
+<div class="message">
+    <input type="text"/>
+    <input type="button" value="留言" />
+    <input type="button" value="批量删除" />
+    <ul id="list"></ul>
+</div>
+</body>
+</html>
